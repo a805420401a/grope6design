@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+@Controller
 public class LoginContruller {
 
     @Autowired
@@ -23,15 +27,11 @@ public class LoginContruller {
         return "login";
     }
 
-    @RequestMapping("/customer/login")
-    public String customerLogin(){
-
-        return "customer/login";
-    }
-
     @RequestMapping(value = "/login2",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String login2(@RequestBody JSONObject jsonParam){
+    public String login2(HttpServletRequest request,
+                         @RequestBody JSONObject jsonParam){
+
         String json = jsonParam.toJSONString();
 
         String loginName = JSONObject.parseObject(json).getString("loginName");
@@ -45,9 +45,14 @@ public class LoginContruller {
 
         Login login = loginService.findByUserId(loginName);
 
-//        System.out.println(login.toString());
+        System.out.println(login.toString());
 
         if(login != null && login.getUserpassword().equals(password) && login.getNusertype().intValue()==role){
+
+            //添加到session
+            HttpSession session = request.getSession();
+            session.setAttribute("loginName",loginName);
+
             if(role == 2){//表示客户（购买者）
                 return "success0";
             }else{//表示商家或管理员

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>用户登录</title>
+  <link rel="stylesheet" th:href="@{/static/plugins/layui/css/layui.css}">
+</head>
+
+<body>
+    <table id="goods" lay-filter="test"></table>
+
+    <script th:src="@{/static/plugins/layui/layui.js}"></script>
+    <script>
+        layui.use('table', function(){
+            var table = layui.table;
+
+            //第一个实例
+            table.render({
+                elem: '#goods'
+                ,height: 312
+                ,url: 'merchant' //数据接口
+                ,page: true //开启分页
+                ,cols: [[ //表头
+                    {field: 'goodsid', title: 'ID', width:80, sort: true, fixed: 'left'}
+                    ,{field: 'name', title: '商品名', width:80}
+                    ,{field: 'number', title: '数量', width:80, sort: true}
+                    ,{field: 'price', title: '单价', width:80}
+                    ,{field: 'description', title: '描述', width: 177}
+                    ,{field: 'manufacturedate', title: '生产日期', width: 80, sort: true}
+                    ,{field: 'manufacturer', title: '生产商', width: 80, sort: true}
+                    ,{field: 'durableyears', title: '使用年限', width: 80}
+                ]]
+            });
+        });
+    </script>
+</body>
+
+</html>
