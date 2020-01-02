@@ -3,6 +3,7 @@ package com.grope6.design.mapper;
 import com.grope6.design.dto.GoodsQryItem;
 import com.grope6.design.entity.Goods;
 import com.grope6.design.entity.GoodsExample;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -15,6 +16,7 @@ public interface GoodsMapper {
 
     int deleteByExample(GoodsExample example);
 
+    @Delete("DELETE FROM goods WHERE goodsid = #{goodsid}")
     int deleteByPrimaryKey(String goodsid);
 
     int insert(Goods record);

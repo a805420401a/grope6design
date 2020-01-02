@@ -33,7 +33,7 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods> courseQryResults = goodsMapper.GoodsinfoSelect(merchantid);
 
         //用PageInfo对结果进行包装
-        PageInfo<Goods> page = new PageInfo<Goods>(courseQryResults);
+        PageInfo<Goods> page = new PageInfo<>(courseQryResults);
         return page;
     }
 
@@ -49,6 +49,6 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public int deleteByGoodsId(String goodsId) {
-        return 0;
+        return goodsMapper.deleteByPrimaryKey(goodsId);
     }
 }

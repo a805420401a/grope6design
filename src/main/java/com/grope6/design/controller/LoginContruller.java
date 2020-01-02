@@ -45,7 +45,7 @@ public class LoginContruller {
 
         Login login = loginService.findByUserId(loginName);
 
-        System.out.println(login.toString());
+//        System.out.println(login.toString());
 
         if(login != null && login.getUserpassword().equals(password) && login.getNusertype().intValue()==role){
 

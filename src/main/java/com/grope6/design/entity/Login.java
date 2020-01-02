@@ -5,7 +5,7 @@ public class Login {
 
     private String userpassword;
 
-    private Integer nusertype;
+    private Integer usertype;
 
     public String getUserid() {
         return userid;
@@ -24,11 +24,11 @@ public class Login {
     }
 
     public Integer getNusertype() {
-        return nusertype;
+        return usertype;
     }
 
     public void setNusertype(Integer nusertype) {
-        this.nusertype = nusertype;
+        this.usertype = nusertype;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Login {
         return "Login{" +
                 "userid='" + userid + '\'' +
                 ", userpassword='" + userpassword + '\'' +
-                ", nusertype=" + nusertype +
+                ", nusertype=" + usertype +
                 '}';
     }
 }
