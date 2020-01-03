@@ -14,8 +14,8 @@ public interface GoodsShowService {
     //插入
     int insertGoods(Goodsshow login);
 
-    Goodsshow findByGoodsid(String Goodsid);
+    Goodsshow findByGoodsid(String goodsid);
 
     //根据id删除
-    int deleteByGoodsId(Goodsshow goodsId);
+    int deleteByGoodsId(String goodsId);
 }

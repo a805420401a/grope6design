@@ -24,4 +24,7 @@ public interface GoodsshowMapper {
     int updateByExampleSelective(@Param("record") Goodsshow record, @Param("example") GoodsshowExample example);
 
     int updateByExample(@Param("record") Goodsshow record, @Param("example") GoodsshowExample example);
+
+    @Insert("delete from goodsshow where goodsid = #{goodsId}")
+    int deleteByGoodsId(String goodsId);
 }

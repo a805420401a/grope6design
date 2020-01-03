@@ -24,12 +24,12 @@ public class GoodsShowServiceimpl implements GoodsShowService {
     }
 
     @Override
-    public Goodsshow findByGoodsid(String Goodsid) {
+    public Goodsshow findByGoodsid(String goodsid) {
         return null;
     }
 
     @Override
-    public int deleteByGoodsId(Goodsshow goodsId) {
-        return 0;
+    public int deleteByGoodsId(String goodsId) {
+        return goodsshowMapper.deleteByGoodsId(goodsId);
     }
 }
