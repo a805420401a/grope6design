@@ -35,7 +35,17 @@ public interface GoodsMapper {
 
     int updateByPrimaryKeySelective(Goods record);
 
-    int updateByPrimaryKey(Goods record);
+    @Update("update goods set " +
+            "name = #{name}," +
+            "number = #{number}," +
+            "price = #{price}," +
+            "discount = #{discount}," +
+            "description = #{description}," +
+            "manufacturedate = #{manufacturedate}," +
+            "manufacturer = #{manufacturer}," +
+            "durableyears = #{durableyears} " +
+            "where goodsid = #{goodsid}")
+    int updateByPrimaryKey(Goods goods);
 
     @Select("select * from goods where merchantid = #{merchantid}")
     List<Goods> GoodsinfoSelect(String merchantid);

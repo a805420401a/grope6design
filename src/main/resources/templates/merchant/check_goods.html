@@ -85,8 +85,15 @@
                         })
                     });
                 } else if(obj.event === 'edit'){
-                    // window.alert(data.goodsid);
-                    // active.toedit("徐州工程学院教学工作量核算系统-修改课程信息",data.id);
+                    layer.open({
+                        type: 2,
+                        title: "编辑商品信息",
+                        shadeClose: false,
+                        shade: 0.5,
+                        maxmin: true, //开启最大化最小化按钮
+                        area: ['1000px', '600px'],
+                        content: '/merchant/alertGoods/'+data.goodsid
+                    });
                 }
             });
         });

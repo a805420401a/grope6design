@@ -38,8 +38,8 @@ public class GoodsServiceimpl implements GoodsService {
     }
 
     @Override
-    public int updateGoods(Goods login) {
-        return 0;
+    public int updateGoods(Goods goods) {
+        return goodsMapper.updateByPrimaryKey(goods);
     }
 
     @Override

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" >
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>编辑商品基本信息</title>
+  <title>修改商品信息</title>
   <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}">
 </head>
 
@@ -35,19 +35,19 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">商品编号</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="goodsid" lay-verify="required" autocomplete="off" class="layui-input">
+                                        <input type="text" readonly name="goodsid" th:value="${goodsInfo.goodsid}" lay-verify="required" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">商品名称</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="goodsname" lay-verify="required" autocomplete="off" class="layui-input">
+                                        <input type="text" name="goodsname" th:value="${goodsInfo.name}" lay-verify="required" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">商品数量</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="goodsnumber" lay-verify="required" autocomplete="off" class="layui-input">
+                                        <input type="text" name="goodsnumber" th:value="${goodsInfo.number}" lay-verify="required" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                             </div>
@@ -55,19 +55,19 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">商品价格</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="goodsprice" lay-verify="required" autocomplete="off" class="layui-input">
+                                        <input type="text" name="goodsprice" th:value="${goodsInfo.price}" lay-verify="required" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">商品折扣</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="goodsdiscount" lay-verify="required" autocomplete="off" class="layui-input">
+                                        <input type="text" name="goodsdiscount" th:value="${goodsInfo.discount}" lay-verify="required" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">生产日期</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="manufacturedate" placeholder="yyyy-MM-dd" id="gdate" lay-verify="date" autocomplete="off" class="layui-input">
+                                        <input type="text" name="manufacturedate" th:value="${goodsInfo.manufacturedate}" placeholder="yyyy-MM-dd" id="gdate" lay-verify="date" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                             </div>
@@ -75,20 +75,20 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">生产商</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="manufacturer" lay-verify="required" autocomplete="off" class="layui-input">
+                                        <input type="text" name="manufacturer" th:value="${goodsInfo.manufacturer}" lay-verify="required" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">使用年限</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="durableyears" lay-verify="required" autocomplete="off" class="layui-input">
+                                        <input type="text" name="durableyears" th:value="${goodsInfo.durableyears}" lay-verify="required" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                             </div>
                             <div class="layui-form-item layui-form-text">
                                 <label class="layui-form-label">商品描述</label>
                                 <div class="layui-input-block">
-                                    <textarea placeholder="请输入内容" name="description" lay-verify="required" class="layui-textarea"></textarea>
+                                    <textarea placeholder="请输入内容" name="description" th:value="${goodsInfo.description}" lay-verify="required" class="layui-textarea"></textarea>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -103,6 +103,7 @@
             </div>
         </div>
     </div>
+
     <script th:src="@{/plugins/layui/layui.js}"></script>
     <script>
         layui.use(['form','upload','laydate','layedit'], function(){
@@ -157,13 +158,14 @@
                 var json=JSON.stringify(data.field);
                 console.log(json);
                 $.ajax({
-                    url:"/merchant/submitGoodsInfo/"+"0",
+                    url:"/merchant/submitGoodsInfo/"+"1",
                     type:"post",
                     data:json,
                     dataType:"text",
                     contentType:"application/json",
                     success:function (result) {
                         window.alert(result);
+                        parent.layer.close(index); //再执行关闭
                     },
                     complete:function(XMLHttpRequest,textStatus){
                         //请求发送完成

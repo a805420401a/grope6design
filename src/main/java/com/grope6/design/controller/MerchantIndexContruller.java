@@ -7,17 +7,12 @@ import com.grope6.design.entity.Goods;
 import com.grope6.design.entity.Goodsshow;
 import com.grope6.design.service.GoodsService;
 import com.grope6.design.service.GoodsShowService;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.FileItemFactory;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -96,6 +91,17 @@ public class MerchantIndexContruller {
         return "success";
     }
 
+    @RequestMapping(path = "/merchant/alertGoods/{id}", method = RequestMethod.GET)
+    public ModelAndView toAddpage(HttpServletRequest request,@PathVariable("id") String id){
+        ModelAndView mv = new ModelAndView("merchant/alert_goods");
+//        System.out.println("id=" + id);
+        if(id != null && !id.equals("")){
+            mv.addObject("goodsInfo",goodsService.findByGoodsId(id));
+        }
+
+        return mv;
+    }
+
 
     @RequestMapping("/merchant/add_goods")
     public String AddGoods(){
@@ -161,10 +167,12 @@ public class MerchantIndexContruller {
         }
     }
 
-    @RequestMapping(value = "/merchant/submitGoodsInfo" , method = RequestMethod.POST ,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/merchant/submitGoodsInfo/{id}" , method = RequestMethod.POST ,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String submitGoodsInfo(HttpServletRequest request,
-                                  @RequestBody JSONObject jsonParam){
+                                  @RequestBody JSONObject jsonParam,
+                                  @PathVariable("id") String id){
+
         String json = jsonParam.toJSONString();
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -197,44 +205,44 @@ public class MerchantIndexContruller {
         HttpSession session = request.getSession();
         String goodsPicturePath = (String)session.getAttribute("goodsPicturePath");
         String merchantid = (String)session.getAttribute("loginName");
-//        System.out.println(json);
-//        System.out.println(request.getSession().getAttribute("goodsPicturePath"));
-
-//        System.out.println(goodsid);
-//        System.out.println(goodsname);
-//        System.out.println(goodsnumber);
-//        System.out.println(goodsprice);
-//        System.out.println(goodsdiscount);
-//        System.out.println(manufacturedate);
-//        System.out.println(manufacturer);
-//        System.out.println(durableyears);
-//        System.out.println(description);
-//        System.out.println(goodsPicturePath);
-//        System.out.println(merchantid);
 
         //向数据库上传数据
 
         Goods goods = new Goods(goodsid,merchantid,goodsname,goodsnumber,goodsprice,
                 goodsdiscount,description,manufacturedate,manufacturer,durableyears);
 
-        Goodsshow goodsshow = new Goodsshow(goodsid,goodsPicturePath);
-
-        Goods goods1 = goodsService.findByGoodsId(goodsid); //查询是否有该id的数据
-        if(goods1 != null){
-            return "与已有商品的ID重复";
+        Goodsshow goodsshow = null;
+        if(goodsPicturePath != null){
+            goodsshow = new Goodsshow(goodsid,goodsPicturePath);
         }
 
-        //如果没有则进行插入处理
-        if(goodsService.insertGoods(goods) != 1){
-            return "数据上传失败";
-        };
+        if(id.equals("0")){
+            //添加数据
+            Goods goods1 = goodsService.findByGoodsId(goodsid); //查询是否有该id的数据
+            if(goods1 != null){
+                return "与已有商品的ID重复";
+            }
 
-        if(goodsShowService.insertGoods(goodsshow) != 1){
-            return "图片上传失败";
+            //如果没有则进行插入处理
+            if(goodsService.insertGoods(goods) != 1){
+                return "数据上传失败";
+            };
+
+            if(goodsShowService.insertGoods(goodsshow) != 1){
+                return "图片上传失败";
+            }
+            session.removeAttribute("goodsPicturePath");
+        }else if(id.equals("1")){
+            //修改数据
+            if(goodsService.updateGoods(goods) != 1){
+                return "数据修改失败";
+            }
+
+            if(goodsshow != null && goodsShowService.updateGoodsshow(goodsshow) != 1){
+                return "图片修改失败";
+            }
         }
 
-        session.removeAttribute("goodsPicturePath");
-
-        return "success";
+        return "数据保存成功";
     }
 }

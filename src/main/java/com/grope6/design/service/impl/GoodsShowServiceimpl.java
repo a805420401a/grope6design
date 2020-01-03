@@ -14,13 +14,13 @@ public class GoodsShowServiceimpl implements GoodsShowService {
     GoodsshowMapper goodsshowMapper;
 
     @Override
-    public int updateGoods(Goodsshow login) {
-        return 0;
+    public int updateGoodsshow(Goodsshow goodsshow) {
+        return goodsshowMapper.update(goodsshow);
     }
 
     @Override
-    public int insertGoods(Goodsshow login) {
-        return goodsshowMapper.insert(login);
+    public int insertGoods(Goodsshow goodsshow) {
+        return goodsshowMapper.insert(goodsshow);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.grope6.design.entity.GoodsshowExample;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -27,4 +28,9 @@ public interface GoodsshowMapper {
 
     @Insert("delete from goodsshow where goodsid = #{goodsId}")
     int deleteByGoodsId(String goodsId);
+
+    @Update("update goodsshow set " +
+            "picturepath = #{picturepath} " +
+            "where goodsid = #{goodsid}")
+    int update(Goodsshow goodsshow);
 }
