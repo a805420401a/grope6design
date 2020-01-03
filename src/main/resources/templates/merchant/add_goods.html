@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>编辑商品基本信息</title>
+  <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}">
+</head>
+
+<body>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">添加图片</div>
+                    <div class="layui-card-body">
+                        <div class="layui-upload">
+                            <button type="button" class="layui-btn" id="goodsPicture">上传图片</button>
+                            <div class="layui-upload-list">
+                                <img class="layui-upload-img" id="demo1">
+                                <p id="demoText"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">商品其他基本信息</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商品编号</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="goodsid" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商品名称</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="goodsname" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商品数量</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="goodsnumber" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商品价格</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="goodsprice" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商品折扣</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="goodsdiscount" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">生产日期</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="manufacturedate" placeholder="yyyy-MM-dd" id="gdate" lay-verify="date" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">生产商</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="manufacturer" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">使用年限</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="durableyears" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">商品描述</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入内容" name="description" lay-verify="required" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="ajaxsubmit">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+    <script>
+        layui.use(['form','upload','laydate','layedit'], function(){
+            var $ = layui.jquery,
+                upload = layui.upload
+                ,form = layui.form
+                ,layer = layui.layer
+                ,layedit = layui.layedit
+                ,laydate = layui.laydate;
+
+            //普通图片上传
+            var imgpath = upload.render({
+                elem: '#goodsPicture'
+                ,url: '/merchant/savePicture'
+                ,size: 500 //限制文件大小，单位 KB
+                ,accept:'images'  //上传文件类型
+                ,acceptMime:'image/*' //文件后缀*为所有
+                ,field:'projectImg' //
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                ,done: function(res){
+                    //如果上传失败
+                    console.log(res);
+                    if(res.code > 0){
+                        layer.msg('上传失败');
+                        return null;
+                    }
+                    //上传成功
+                    layer.msg("图片上传成功");
+                    return res.path;
+                }
+                ,error: function(){
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function(){
+                        uploadInst.upload();
+                    });
+                }
+            });
+
+            //日期
+            laydate.render({
+                elem: '#gdate'
+            });
+
+            form.on('submit(ajaxsubmit)',function (data) {
+                var json=JSON.stringify(data.field);
+                console.log(json);
+                $.ajax({
+                    url:"/merchant/submitGoodsInfo",
+                    type:"post",
+                    data:json,
+                    dataType:"text",
+                    contentType:"application/json",
+                    success:function (result) {
+                        if(result == "success"){
+                            window.alert("上传成功");
+                        }else{
+                            window.alert(result);
+                        }
+                    },
+                    complete:function(XMLHttpRequest,textStatus){
+                        //请求发送完成
+                    },
+                    error:function(XMLHttpRequest,textStatus){
+                        layer.msg("服务器内部错误");
+                        //请求发送失败
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

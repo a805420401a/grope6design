@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GoodsServiceImpl implements GoodsService {
+public class GoodsServiceimpl implements GoodsService {
 
     @Autowired
     GoodsMapper goodsMapper;
@@ -43,8 +43,13 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public Goods findByGoodsId(String goodsId) {
+        return goodsMapper.findByGoodsId(goodsId);
+    }
+
+    @Override
     public int insertGoods(Goods login) {
-        return 0;
+        return goodsMapper.insert(login);
     }
 
     @Override

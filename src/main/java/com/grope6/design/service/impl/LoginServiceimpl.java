@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceimpl implements LoginService {
 
     @Autowired
     private LoginMapper loginMapper;

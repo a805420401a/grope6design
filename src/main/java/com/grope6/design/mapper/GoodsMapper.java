@@ -3,10 +3,7 @@ package com.grope6.design.mapper;
 import com.grope6.design.dto.GoodsQryItem;
 import com.grope6.design.entity.Goods;
 import com.grope6.design.entity.GoodsExample;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,7 +16,9 @@ public interface GoodsMapper {
     @Delete("DELETE FROM goods WHERE goodsid = #{goodsid}")
     int deleteByPrimaryKey(String goodsid);
 
-    int insert(Goods record);
+    @Insert("insert into goods value (#{goodsid},#{merchantid},#{name},#{number},#{price}," +
+            "#{discount},#{description},#{manufacturedate},#{manufacturer},#{durableyears})")
+    int insert(Goods goods);
 
     int insertSelective(Goods record);
 
@@ -40,4 +39,7 @@ public interface GoodsMapper {
 
     @Select("select * from goods where merchantid = #{merchantid}")
     List<Goods> GoodsinfoSelect(String merchantid);
+
+    @Select("select * from goods where goodsid = #{Goodsid}")
+    Goods findByGoodsId(String goodsid);
 }

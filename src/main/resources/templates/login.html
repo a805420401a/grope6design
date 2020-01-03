@@ -78,7 +78,7 @@
         var json=JSON.stringify(data.field);
 
         $.ajax({
-          url:"login2",
+          url:"/login2",
           type:"post",
           data:json,
           dataType:"text",
@@ -89,7 +89,7 @@
             }else if (result == "success1"){
               location.href="index";
             }else if (result == "success0"){
-              location.href="customer/index";
+              location.href="/customer/index";
             }
           },
           complete:function(XMLHttpRequest,textStatus){

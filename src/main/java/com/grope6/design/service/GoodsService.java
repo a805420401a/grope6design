@@ -16,6 +16,8 @@ public interface GoodsService {
     //更新
     int updateGoods(Goods login);
 
+    Goods findByGoodsId(String goodsId);
+
     //插入
     int insertGoods(Goods login);
 

@@ -23,6 +23,23 @@ public class Goods {
 
     private int durableyears;
 
+    public Goods(String goodsid, String merchantid, String name, int number, double price, double discount, String description, Date manufacturedate, String manufacturer, int durableyears) {
+        this.goodsid = goodsid;
+        this.merchantid = merchantid;
+        this.name = name;
+        this.number = number;
+        this.price = price;
+        this.discount = discount;
+        this.description = description;
+        this.manufacturedate = manufacturedate;
+        this.manufacturer = manufacturer;
+        this.durableyears = durableyears;
+    }
+
+    public Goods(){
+
+    }
+
     public String getGoodsid() {
         return goodsid;
     }
