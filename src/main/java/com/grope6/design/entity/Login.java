@@ -5,7 +5,16 @@ public class Login {
 
     private String userpassword;
 
-    private Integer usertype;
+    private int usertype;
+
+    public Login(String userid, String userpassword, int usertype) {
+        this.userid = userid;
+        this.userpassword = userpassword;
+        this.usertype = usertype;
+    }
+
+    public Login() {
+    }
 
     public String getUserid() {
         return userid;
@@ -23,11 +32,11 @@ public class Login {
         this.userpassword = userpassword;
     }
 
-    public Integer getNusertype() {
+    public int getUsertype() {
         return usertype;
     }
 
-    public void setNusertype(Integer nusertype) {
+    public void setUsertype(int nusertype) {
         this.usertype = nusertype;
     }
 

@@ -80,15 +80,15 @@ public class MerchantIndexContruller {
     public String deleteGoods(@RequestBody String goodsid){
         String deleteGoodsid = goodsid.substring(goodsid.indexOf("=")+1,goodsid.length());
 
-        if(goodsService.deleteByGoodsId(deleteGoodsid) != 1){
-            return "error";
-        }
-
         if(goodsShowService.deleteByGoodsId(deleteGoodsid) != 1){
             return "error";
         }
 
-        return "success";
+        if(goodsService.deleteByGoodsId(deleteGoodsid) != 1){
+            return "error";
+        }
+
+        return "删除成功";
     }
 
     @RequestMapping(path = "/merchant/alertGoods/{id}", method = RequestMethod.GET)

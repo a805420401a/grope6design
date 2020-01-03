@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>医疗设备-注册</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/customer/css/reset.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/customer/css/main.css}">
+    <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}">
+	<script type="text/javascript" th:src="@{/customer/js/jquery-1.12.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{/customer/js/register.js}"></script>
+</head>
+<body>
+	<div class="register_con">
+		<div class="l_con fl">
+			<a class="reg_logo"><img th:src="@{/customer/images/logo/logo.png}"></a>
+			<div class="reg_slogan">祝你早日康复  ·  快乐每一天</div>
+			<div class="reg_banner"></div>
+		</div>
+
+		<div class="r_con fr">
+			<div class="reg_title clearfix">
+				<h1>用户注册</h1>
+				<a href="#" id="login">登录</a>
+			</div>
+			<div class="reg_form clearfix">
+                <div class="layui-tab">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">用户注册</li>
+                        <li>商家注册</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">用户名</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="userid" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">昵称</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" name="password" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">确认密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" name="repassword" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit1">立即提交</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="layui-tab-item">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">商家账号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="userid" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">商家名称</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" name="password" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">确认密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" name="repassword" lay-verify="required" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit2">立即提交</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="footer no-mp">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		<p>CopyRight © 2016 徐州工程学院 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+
+    <script th:src="@{/plugins/layui/layui.js}"></script>
+    <script>
+        layui.use(['element','form'], function(){
+            var $ = layui.jquery
+                ,element = layui.element //Tab的切换功能，切换事件监听等，需要依赖element模块
+                ,form = layui.form
+                ,layer = layui.layer;
+
+            $('#login').on('click', function() {
+                location.href="login";
+            });
+            //触发事件
+            var active = {
+                tabChange: function(){
+                    //切换到指定Tab项
+                    element.tabChange('demo', '22'); //切换到：用户管理
+                }
+            };
+
+            form.on('submit(submit1)',function (data) {
+                var json=JSON.stringify(data.field);
+                console.log(json);
+                $.ajax({
+                    url:"/register2/"+"0",
+                    type:"post",
+                    data:json,
+                    dataType:"text",
+                    contentType:"application/json",
+                    success:function (result) {
+                        window.alert(result);
+                    },
+                    complete:function(XMLHttpRequest,textStatus){
+                        //请求发送完成
+                    },
+                    error:function(XMLHttpRequest,textStatus){
+                        layer.msg("服务器内部错误");
+                        //请求发送失败
+                    }
+                });
+            });
+
+            form.on('submit(submit2)',function (data) {
+                var json=JSON.stringify(data.field);
+                console.log(json);
+                $.ajax({
+                    url:"/register2/"+"1",
+                    type:"post",
+                    data:json,
+                    dataType:"text",
+                    contentType:"application/json",
+                    success:function (result) {
+                        window.alert(result);
+                    },
+                    complete:function(XMLHttpRequest,textStatus){
+                        //请求发送完成
+                    },
+                    error:function(XMLHttpRequest,textStatus){
+                        window.alert("服务器内部错误");
+                        //请求发送失败
+                    }
+                });
+            });
+        });
+    </script>
+	
+</body>
+</html>

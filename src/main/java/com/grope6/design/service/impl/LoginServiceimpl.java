@@ -27,7 +27,7 @@ public class LoginServiceimpl implements LoginService {
 
     @Override
     public int insertLogin(Login login) {
-        return 0;
+        return loginMapper.insert(login);
     }
 
     @Override
