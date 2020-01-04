@@ -2,6 +2,7 @@ package com.grope6.design.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.grope6.design.dto.GoodsAndPicture;
 import com.grope6.design.dto.GoodsQryItem;
 import com.grope6.design.entity.Goods;
 import com.grope6.design.entity.Login;
@@ -22,7 +23,7 @@ public class GoodsServiceimpl implements GoodsService {
 
     @Override
     public List<Goods> findAll() {
-        return null;
+        return goodsMapper.findAll();
     }
 
     @Override
@@ -55,5 +56,15 @@ public class GoodsServiceimpl implements GoodsService {
     @Override
     public int deleteByGoodsId(String goodsId) {
         return goodsMapper.deleteByPrimaryKey(goodsId);
+    }
+
+    @Override
+    public List<GoodsAndPicture> findAndPictureAll() {
+        return goodsMapper.findAndPictureAll();
+    }
+
+    @Override
+    public GoodsAndPicture findGoodsAndPictureByGoodsId(String goodsid) {
+        return goodsMapper.findGoodsAndPictureByGoodsId(goodsid);
     }
 }

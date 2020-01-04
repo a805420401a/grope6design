@@ -8,11 +8,12 @@
 	<script type="text/javascript" th:src="@{/customer/js/jquery-1.12.4.min.js}"></script>
 	<script type="text/javascript" th:src="@{/customer/js/jquery-ui.min.js}"></script>
 	<script type="text/javascript" th:src="@{/customer/js/slide.js}"></script>
+
 </head>
 <body>
 	<div class="header_con">
 		<div class="header">
-			<div class="welcome fl">欢迎来到医疗设备!</div>
+			<div class="welcome fl">欢迎来到医疗器械销售平台!</div>
 			<div class="fr">
 				<div class="login_info fl">
 					欢迎您：<em>张 山</em>
@@ -68,7 +69,7 @@
 		<div class="slide fl">
 			<ul class="slide_pics">
 				<li><img th:src="@{/customer/images/slideshow/slide01.jpg}" alt="幻灯片"></li>
-				<li><img th:src="@{/customer//slideshow/slide02.jpg}" alt="幻灯片"></li>
+				<li><img th:src="@{/customer/images/slideshow/slide02.jpg}" alt="幻灯片"></li>
 				<li><img th:src="@{/customer/images/slideshow/slide03.jpg}" alt="幻灯片"></li>
 				<li><img th:src="@{/customer/images/slideshow/slide04.jpg}" alt="幻灯片"></li>
 			</ul>
@@ -82,237 +83,29 @@
 		</div>
 	</div>
 
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model01">病房护理设备</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<!--<a href="#">鲜芒</a>-->
-				<!--<a href="#">加州提子</a>-->
-				<!--<a href="#">亚马逊牛油果</a>-->
-			</div>
-			<a href="#" class="goods_more fr" id="fruit_more">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img th:src="@{/customer/images/wardnursing/banner.jpg}"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">床头柜</a></h4>
-					<a href="#"><img th:src="@{/customer/images/wardnursing/goods001.jpg}"></a>
-					<div class="prize">¥ 30.00</div>
-				</li>
-				<li>
-					<h4><a href="#">护理床</a></h4>
-					<a href="#"><img th:src="@{/customer/images/wardnursing/goods002.jpg}"></a>
-					<div class="prize">¥ 5.50</div>
-				</li>
-				<li>
-					<h4><a href="#">护理工作站</a></h4>
-					<a href="#"><img th:src="@{/customer/images/wardnursing/goods003.jpg}"></a>
-					<div class="prize">¥ 3.90</div>
-				</li>
-				<li>
-					<h4><a href="#">器械柜</a></h4>
-					<a href="#"><img th:src="@{/customer/images/wardnursing/goods004.jpg}"></a>
-					<div class="prize">¥ 25.80</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model02">放射治疗设备</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<!--<a href="#">河虾</a>-->
-				<!--<a href="#">扇贝</a>				-->
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img th:src="@{/customer/images/radiologicalapparatus/banner.jpg}"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">防线设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/radiologicalapparatus/goods001.jpg}"></a>
-					<div class="prize">¥ 48.00</div>
-				</li>
-				<li>
-					<h4><a href="#">防线设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/radiologicalapparatus/goods002.jpg}"></a>
-					<div class="prize">¥ 46.00</div>
-				</li>
-				<li>
-					<h4><a href="#">防线设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/radiologicalapparatus/goods003.jpg}"></a>
-					<div class="prize">¥ 19.00</div>
-				</li>
-				<li>
-					<h4><a href="#">防线设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/radiologicalapparatus/goods004.jpg}"></a>
-					<div class="prize">¥ 25.00</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model03">核医学治疗设备</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<!--<a href="#">鲜芒</a>-->
-				<!--<a href="#">加州提子</a>-->
-				<!--<a href="#">亚马逊牛油果</a>-->
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img th:src="@{/customer/images/nuclear/banner.jpg}"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">核医设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/nuclear/goods001.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">核医设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/nuclear/goods002.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">核医设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/nuclear/goods003.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">核医设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/nuclear/goods004.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model04">激光设备</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<!--<a href="#">鲜芒</a>-->
-				<!--<a href="#">加州提子</a>-->
-				<!--<a href="#">亚马逊牛油果</a>-->
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img th:src="@{/customer/images/lasergear/banner.jpg}"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">激光设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/lasergear/goods001.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">激光设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/lasergear/goods002.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">激光设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/lasergear/goods003.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">激光设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/lasergear/goods004.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model05">透析治疗设备</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<!--<a href="#">鲜芒</a>-->
-				<!--<a href="#">加州提子</a>-->
-				<!--<a href="#">亚马逊牛油果</a>-->
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img th:src="@{/customer/images/dialysistreatment/banner.jpg}"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">透析治疗</a></h4>
-					<a href="#"><img th:src="@{/customer/images/dialysistreatment/goods001.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">透析治疗</a></h4>
-					<a href="#"><img th:src="@{/customer/images/dialysistreatment/goods002.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">透析治疗</a></h4>
-					<a href="#"><img th:src="@{/customer/images/dialysistreatment/goods003.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">透析治疗</a></h4>
-					<a href="#"><img th:src="@{/customer/images/dialysistreatment/goods004.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="list_model">
-		<div class="list_title clearfix">
-			<h3 class="fl" id="model06">辅助设备类</h3>
-			<div class="subtitle fl">
-				<span>|</span>
-				<!--<a href="#">鲜芒</a>-->
-				<!--<a href="#">加州提子</a>-->
-				<!--<a href="#">亚马逊牛油果</a>-->
-			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
-		</div>
-
-		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img th:src="@{/customer/images/auxiliaryequipment/banner.jpg}"></div>
-			<ul class="goods_list fl">
-				<li>
-					<h4><a href="#">辅助设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/auxiliaryequipment/goods001.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">辅助设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/auxiliaryequipment/goods002.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">辅助设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/auxiliaryequipment/goods003.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">辅助设备</a></h4>
-					<a href="#"><img th:src="@{/customer/images/auxiliaryequipment/goods004.jpg}"></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-			</ul>
-		</div>
+	<div id="goodsAll">
+<!--		<div class="list_model">-->
+<!--			<div class="list_title clearfix"></div>-->
+<!--			<div class="goods_con clearfix">-->
+<!--				<ul class="goods_list fl">-->
+<!--					<li>-->
+<!--						<h4><a href="#" ></a></h4>-->
+<!--						<a href="#"><img ></a>-->
+<!--						<div class="prize" ></div>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<h4><a href="#" ></a></h4>-->
+<!--						<a href="#"><img ></a>-->
+<!--						<div class="prize" >￥ 30.00</div>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<h4><a href="#" ></a></h4>-->
+<!--						<a href="#"><img ></a>-->
+<!--						<div class="prize" >￥ 30.00</div>-->
+<!--					</li>-->
+<!--				</ul>-->
+<!--			</div>-->
+<!--		</div>-->
 	</div>
 
 	<!--<div class="footer">-->
@@ -327,23 +120,49 @@
 		<!--</div>-->
 		<!--<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>-->
 		<!--<p>电话：010-****888    京ICP备*******8号</p>-->
-	<!--</div>-->
-<!--	<script type="text/javascript" th:src="@{/customer/js/slideshow.js}"></script>-->
-<!--	<script type="text/javascript">-->
-<!--		BCSlideshow('focuspic');-->
-<!--		var oFruit = document.getElementById('fruit_more');-->
-<!--		var oShownum = document.getElementById('show_count');-->
+<!--	</div>-->
+	<script type="text/javascript" th:src="@{/customer/js/slideshow.js}"></script>
+	<script type="text/javascript">
 
-<!--		var hasorder = localStorage.getItem('order_finish');-->
+		$(document).ready(function(){
+			var number;
+			var i = 0;
+			var j = 0;
+			$.get("/customer/getData",function(data,status){
+				// alert("数据: " + data + "\n状态: " + status);
+				console.log(data);
+				$.each(data,function(infoIndex1, info1){
 
-<!--		if(hasorder)-->
-<!--		{-->
-<!--			oShownum.innerHTML = '2';-->
-<!--		}-->
+					if(infoIndex1 == "number"){
+						number = info1;
+					}else{
+						if(i % 5 == 0){
+							//输出头部
+							// window.alert(j);
+							j ++;
+							$("#goodsAll").append('<div class="list_model">' +
+									'<div class="list_title clearfix"></div>' +
+									'<div class="goods_con clearfix">' +
+									'<ul class="goods_list fl" id="goods'+j+'">' +
+									'</ul>' +
+									'</div>' +
+									'</div>');
+						}
+					//	$.each(info1,function (infoIndex2, info2) {
+						//输出数据
+						console.log(info1);
+						$("#goods"+j).append('<li>' +
+								'<h4><a href="/customer/goodsParticular/'+info1.goodsid+'" >'+info1.name+'</a></h4>' +
+								'<a href="/customer/goodsParticular/'+info1.goodsid+'" ><img src="'+info1.picture+'" ></a>' +
+								'<div class="prize" >￥ '+info1.price+'</div>' +
+								'</li>');
+				//		});
+						i ++;
+					}
+				});
+			});
+		});
 
-<!--		oFruit.onclick = function(){-->
-<!--			window.location.href = 'list.html';-->
-<!--		}-->
-<!--	</script>-->
+	</script>
 </body>
 </html>

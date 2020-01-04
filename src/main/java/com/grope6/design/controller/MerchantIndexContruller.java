@@ -98,7 +98,6 @@ public class MerchantIndexContruller {
         if(id != null && !id.equals("")){
             mv.addObject("goodsInfo",goodsService.findByGoodsId(id));
         }
-
         return mv;
     }
 
@@ -149,7 +148,7 @@ public class MerchantIndexContruller {
             out.write(fileBytes);
             out.flush();
             //写入成功
-            request.getSession().setAttribute("goodsPicturePath",filePath+fileName);
+            request.getSession().setAttribute("goodsPicturePath","/merchant/upload/"+fileName);
             map.put("res",0);
             map.put("path",filePath+fileName);
             return map;

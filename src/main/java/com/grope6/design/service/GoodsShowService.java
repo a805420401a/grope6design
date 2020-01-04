@@ -2,7 +2,11 @@ package com.grope6.design.service;
 
 import com.grope6.design.entity.Goodsshow;
 
+import java.util.List;
+
 public interface GoodsShowService {
+
+    List<Goodsshow> findAll();
 
     //更新
     int updateGoodsshow(Goodsshow goodsshow);

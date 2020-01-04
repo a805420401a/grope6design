@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>医疗设备-商品详情</title>
-	<link rel="stylesheet" type="text/css" href="css/reset.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/customer/css/reset.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/customer/css/main.css}">
 
 </head>
 <body>
@@ -33,7 +33,7 @@
 	</div>
 
 	<div class="search_bar clearfix">
-		<a href="index.html" class="logo fl"><img src="images/logo/logo.png"></a>
+		<a href="index.html" class="logo fl"><img src="customer/images/logo/logo.png"></a>
 		<div class="search_con fl">
 			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
 			<input type="button" class="input_btn fr" name="" value="搜索">
@@ -73,13 +73,13 @@
 	</div>
 
 	<div class="goods_detail_con clearfix">
-		<div class="goods_detail_pic fl"><img src="images/wardnursing/goods001.jpg"></div>
+		<div class="goods_detail_pic fl"><img height="380" width="380" th:src="${goods.picture}"></div>
 
 		<div class="goods_detail_list fr">
-			<h3>床头柜</h3>
-			<p>床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，</p>
+			<h3 th:text="${goods.name}">床头柜</h3>
+			<p th:text="${goods.description}">床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，</p>
 			<div class="prize_bar">
-				<span class="show_pirze">¥<em>500.00</em></span>
+				<span class="show_pirze">¥<em th:text="${goods.price}">500.00</em></span>
 				<span class="show_unit">单  位：个</span>
 			</div>
 			<div class="goods_num clearfix">
@@ -90,7 +90,7 @@
 					<a href="javascript:;" class="minus fr">-</a>	
 				</div> 
 			</div>
-			<div class="total">总价：<em>500元</em></div>
+			<div class="total">总价：<em id="totalPrice">500元</em></div>
 			<div class="operate_btn">
 				<a href="javascript:;" class="buy_btn">立即购买</a>
 				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
@@ -130,7 +130,7 @@
 	</div>
 	<div class="add_jump"></div>
 
-	<script type="text/javascript" src="js/jquery-1.12.2.js"></script>
+	<script type="text/javascript" th:src="@{customer/js/jquery-1.12.4.min.js}"></script>
 	<script type="text/javascript">
 		var $add_x = $('#add_cart').offset().top;
 		var $add_y = $('#add_cart').offset().left;

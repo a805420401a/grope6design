@@ -1,5 +1,6 @@
 package com.grope6.design.mapper;
 
+import com.grope6.design.dto.GoodsAndPicture;
 import com.grope6.design.dto.GoodsQryItem;
 import com.grope6.design.entity.Goods;
 import com.grope6.design.entity.GoodsExample;
@@ -52,4 +53,15 @@ public interface GoodsMapper {
 
     @Select("select * from goods where goodsid = #{Goodsid}")
     Goods findByGoodsId(String goodsid);
+
+    @Select("select g.* , p.picturepath FROM " +
+            "goods g , goodsshow p " +
+            "where g.goodsid = p.goodsid ")
+    List<GoodsAndPicture> findAndPictureAll();
+
+    @Select("select g.* , p.picturepath FROM " +
+            "goods g , goodsshow p " +
+            "where g.goodsid = p.goodsid and " +
+            "g.goodsid = #{goodsid}")
+    GoodsAndPicture findGoodsAndPictureByGoodsId(String goodsid);
 }

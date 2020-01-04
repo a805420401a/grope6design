@@ -2,10 +2,7 @@ package com.grope6.design.mapper;
 
 import com.grope6.design.entity.Goodsshow;
 import com.grope6.design.entity.GoodsshowExample;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -33,4 +30,7 @@ public interface GoodsshowMapper {
             "picturepath = #{picturepath} " +
             "where goodsid = #{goodsid}")
     int update(Goodsshow goodsshow);
+
+    @Select("select * from Goodsshow")
+    List<Goodsshow> findAll();
 }

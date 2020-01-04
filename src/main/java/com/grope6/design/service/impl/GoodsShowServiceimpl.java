@@ -7,11 +7,18 @@ import com.grope6.design.service.GoodsShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GoodsShowServiceimpl implements GoodsShowService {
 
     @Autowired
     GoodsshowMapper goodsshowMapper;
+
+    @Override
+    public List<Goodsshow> findAll() {
+        return goodsshowMapper.findAll();
+    }
 
     @Override
     public int updateGoodsshow(Goodsshow goodsshow) {

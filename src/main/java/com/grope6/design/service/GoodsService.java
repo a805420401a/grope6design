@@ -1,6 +1,7 @@
 package com.grope6.design.service;
 
 import com.github.pagehelper.PageInfo;
+import com.grope6.design.dto.GoodsAndPicture;
 import com.grope6.design.dto.GoodsQryItem;
 import com.grope6.design.entity.Goods;
 
@@ -23,4 +24,10 @@ public interface GoodsService {
 
     //根据id删除
     int deleteByGoodsId(String goodsId);
+
+    //与图片关联查询
+    List<GoodsAndPicture> findAndPictureAll();
+
+    GoodsAndPicture findGoodsAndPictureByGoodsId( String goodsid );
+
 }

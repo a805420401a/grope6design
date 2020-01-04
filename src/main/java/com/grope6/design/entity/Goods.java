@@ -119,4 +119,6 @@ public class Goods {
     public void setDurableyears(int durableyears) {
         this.durableyears = durableyears;
     }
+
+
 }
