@@ -4,16 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.grope6.design.dto.OrderData;
 import com.grope6.design.dto.TableDatagrid;
-import com.grope6.design.entity.Customer;
-import com.grope6.design.entity.Goods;
-import com.grope6.design.entity.Goodsshow;
-import com.grope6.design.entity.Indentitem;
-import com.grope6.design.service.CustomerService;
-import com.grope6.design.service.GoodsService;
-import com.grope6.design.service.GoodsShowService;
-import com.grope6.design.service.IndentItemService;
+import com.grope6.design.entity.*;
+import com.grope6.design.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,14 +39,25 @@ public class MerchantIndexContruller {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    private MerchantService merchantService;
+
     @RequestMapping("/index")
-    public String login(HttpServletRequest request){
+    public String login(HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession();
         String loginName = (String)session.getAttribute("loginName");
         if(loginName == null){
             return "login";
         }
+
+        Merchant merchant = merchantService.findByUserId(loginName);
+
+        if(merchant == null){
+            return "login";
+        }
+
+        model.addAttribute("name",merchant.getName());
 
         return "index";
     }

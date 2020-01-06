@@ -2,10 +2,7 @@ package com.grope6.design.mapper;
 
 import com.grope6.design.entity.Customer;
 import com.grope6.design.entity.CustomerExample;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -28,4 +25,9 @@ public interface CustomerMapper {
 
     @Select("select * from customer where buyerid = #{buyerid}")
     Customer selectByBuyerId(String buyerid);
+
+    @Update("update customer set " +
+            "name = #{name} , phone = #{phone} , address = #{address} " +
+            "where buyerid = #{buyerid}")
+    int updateCustomer(Customer customer);
 }

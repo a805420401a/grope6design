@@ -21,7 +21,7 @@ public class CustomerServiceimpl implements CustomerService {
 
     @Override
     public int updateCustomer(Customer customer) {
-        return 0;
+        return customerMapper.updateCustomer(customer);
     }
 
     @Override

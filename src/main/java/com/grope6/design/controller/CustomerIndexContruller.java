@@ -5,17 +5,12 @@ import com.grope6.design.dto.GoodsAndPicture;
 import com.grope6.design.dto.GoodsCartData;
 import com.grope6.design.dto.TableDatagrid;
 import com.grope6.design.dto.GoodsIndentData;
-import com.grope6.design.entity.Cartitem;
-import com.grope6.design.entity.Goods;
-import com.grope6.design.entity.Goodsshow;
-import com.grope6.design.entity.Indentitem;
-import com.grope6.design.service.CartItemService;
-import com.grope6.design.service.GoodsService;
-import com.grope6.design.service.GoodsShowService;
-import com.grope6.design.service.IndentItemService;
+import com.grope6.design.entity.*;
+import com.grope6.design.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,14 +37,26 @@ public class CustomerIndexContruller {
     @Autowired
     IndentItemService indentItemService;
 
+    @Autowired
+    CustomerService customerService;
+
+    String name;
+
     @RequestMapping("/customer/index")
-    public String index(HttpServletRequest request){
+    public String index(HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession();
         String loginName = (String)session.getAttribute("loginName");
         if(loginName == null){
             return "login";
         }
+
+        Customer customer = customerService.findByUserId(loginName);
+        if(customer == null){
+            return "login";
+        }
+        name = customer.getName();
+        model.addAttribute("name",name);
 
         return "customer/index";
     }
@@ -79,6 +86,8 @@ public class CustomerIndexContruller {
 
         mv.addObject("goods",goodsAndPicture);
 
+        mv.addObject("name",name);
+
 //        System.out.println(id);
 
         return mv;
@@ -107,7 +116,8 @@ public class CustomerIndexContruller {
     }
 
     @RequestMapping("/customer/goodsCart")
-    public String goodsCart(){
+    public String goodsCart(Model model){
+        model.addAttribute("name",name);
         return "customer/cart";
     }
 
@@ -196,6 +206,8 @@ public class CustomerIndexContruller {
     @RequestMapping("/customer/place_order")
     public String place_order(HttpServletRequest request,Model model){
 
+        model.addAttribute("name",name);
+
         List<GoodsCartData> goodsCartDataList = (List) request.getSession().getAttribute("goodsCartDataList");
 
         model.addAttribute("number",goodsCartDataList.size());
@@ -235,6 +247,7 @@ public class CustomerIndexContruller {
 
     @RequestMapping("/customer/user_center_order")
     public String user_center_order(HttpServletRequest request,Model model){
+        model.addAttribute("name",name);
 
         HttpSession session = request.getSession();
         //将数据存入数据库中
@@ -323,5 +336,39 @@ public class CustomerIndexContruller {
         }
 
         return"操作有误";
+    }
+
+    @RequestMapping("/customer/user_center_info")
+    public String user_center_info(HttpServletRequest request,  Model model){
+
+        String loginName = (String)request.getSession().getAttribute("loginName");
+        Customer customer = customerService.findByUserId(loginName);
+
+        model.addAttribute("id",customer.getBuyerid());
+        model.addAttribute("name",customer.getName());
+        model.addAttribute("phone",customer.getPhone());
+        model.addAttribute("address",customer.getAddress());
+
+        return "customer/user_center_info";
+    }
+
+    @RequestMapping(value = "/customer/alertCustomerInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String alertCustomerInfo(HttpServletRequest request,  @RequestBody JSONObject jsonParam){
+
+        String json = jsonParam.toJSONString();
+
+        String id = JSONObject.parseObject(json).getString("id");
+        String name = JSONObject.parseObject(json).getString("name");
+        String phone = JSONObject.parseObject(json).getString("phone");
+        String address = JSONObject.parseObject(json).getString("address");
+
+        Customer customer = new Customer(id,name,phone,address);
+
+//        System.out.println(id+"\n"+name+"\n"+phone+"\n"+address);
+
+        customerService.updateCustomer(customer);
+
+        return "信息修改成功";
     }
 }

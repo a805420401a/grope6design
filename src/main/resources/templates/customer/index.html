@@ -16,13 +16,13 @@
 			<div class="welcome fl">欢迎来到医疗器械销售平台!</div>
 			<div class="fr">
 				<div class="login_btn fl">
-					<a href="user_center_info.html">姓名</a>
+					<a href="/customer/user_center_info" th:text="${name}">姓名</a>
 					<span>|</span>
 				</div>
 				<div class="user_link fl">
-					<a href="cart.html">我的购物车</a>
+					<a href="/customer/goodsCart">我的购物车</a>
 					<span>|</span>
-					<a href="user_center_order.html">我的订单</a>
+					<a href="/customer/user_center_order">我的订单</a>
 					<span>|</span>
 				</div>
 				<div class="login_btn fl">
@@ -41,7 +41,7 @@
 			<input type="button" class="input_btn fr" name="" value="搜索">
 		</div>
 		<div class="guest_cart fr">
-			<a href="#" class="cart_name fl">我的购物车</a>
+			<a href="/customer/goodsCart" class="cart_name fl">我的购物车</a>
 			<div class="goods_count fl" id="show_count">1</div>
 		</div>
 	</div>
