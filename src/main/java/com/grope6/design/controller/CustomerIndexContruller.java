@@ -40,6 +40,9 @@ public class CustomerIndexContruller {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    SatisfactionServlet satisfactionServlet;
+
     String name;
 
     @RequestMapping("/customer/index")
@@ -332,7 +335,7 @@ public class CustomerIndexContruller {
                 return "确认收货失败，请先支付";
             }
             indentItemService.updateFinishStateByIndentItemId(goodsindentitemid);
-            return "确认收货成功";
+            return "success";
         }
 
         return"操作有误";
@@ -370,5 +373,41 @@ public class CustomerIndexContruller {
         customerService.updateCustomer(customer);
 
         return "信息修改成功";
+    }
+
+    @RequestMapping("/customer/evaluate/{id}")
+    public String evaluate(HttpServletRequest request , @PathVariable("id") String id){
+
+        Indentitem indentitem = indentItemService.findByIndentItemId(id);
+
+        request.getSession().setAttribute("merchantid",indentitem.getMerchantid());
+
+//        System.out.println(indentitem.getMerchantid());
+
+        return "customer/evaluate";
+    }
+
+    @RequestMapping(value = "/customer/evaluateToDatabase", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String evaluateToDatabase(HttpServletRequest request,@RequestBody JSONObject jsonParam){
+
+        String json = jsonParam.toJSONString();
+
+        String merchantid = (String) request.getSession().getAttribute("merchantid");
+        String buyerid = (String) request.getSession().getAttribute("loginName");
+        double quality = Double.parseDouble(JSONObject.parseObject(json).getString("quality"));
+        double attitude = Double.parseDouble(JSONObject.parseObject(json).getString("attitude"));
+        double logistics = Double.parseDouble(JSONObject.parseObject(json).getString("logistics"));
+        double synthesize = Double.parseDouble(String.format("%.2f", (quality * 5 + attitude * 3 + logistics * 2) / 10));
+
+        Satisfaction satisfaction = new Satisfaction(buyerid,merchantid,quality,attitude,logistics,synthesize);
+
+        System.out.println(buyerid+"\n"+merchantid+"\n"+quality+"\n"+attitude+"\n"+logistics+"\n"+synthesize);
+
+
+        satisfactionServlet.InsertSatisfaction(satisfaction);
+
+
+        return "感谢您的评价！";
     }
 }

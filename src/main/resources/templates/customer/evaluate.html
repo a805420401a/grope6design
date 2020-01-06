@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" >
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>评价</title>
+  <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}">
+</head>
+
+<body>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">确认收货成功，诚邀您进行满意度评价</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form" action="">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">商品质量（0~10）</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="quality" lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">服务态度（0~10）</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="attitude" lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">物流服务（0~10）</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="logistics" lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/plugins/layui/layui.js}"></script>
+    <script>
+        layui.use(['form','upload','laydate','layedit'], function(){
+            var $ = layui.jquery
+                ,form = layui.form
+                ,layer = layui.layer
+
+            form.on('submit(submit)',function (data) {
+                var json=JSON.stringify(data.field);
+                console.log(json);
+                $.ajax({
+                    url:"/customer/evaluateToDatabase",
+                    type:"post",
+                    data:json,
+                    dataType:"text",
+                    contentType:"application/json",
+                    success:function (result) {
+                        window.alert(result);
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);//关闭当前页
+                    },
+                    complete:function(XMLHttpRequest,textStatus){
+                        //请求发送完成
+                    },
+                    error:function(XMLHttpRequest,textStatus){
+                        layer.msg("服务器内部错误");
+                        //请求发送失败
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
