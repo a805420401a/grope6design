@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>修改商家基本信息</title>
+  <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}">
+</head>
+
+<body>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">商家基本信息</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商家编号</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="id" th:value="${id}" readonly lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商家名称</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="name"  th:value="${name}" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商家地址</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="address" th:value="${address}" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商家信誉</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="reputation" th:value="${reputation}" readonly lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商品法人</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="people" th:value="${people}" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商家总资产</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="totalAsset" th:value="${totalAsset}" id="gdate" lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="submitMerchant">立即提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/plugins/layui/layui.js}"></script>
+    <script>
+        layui.use(['form','layedit'], function(){
+            var $ = layui.jquery
+                ,form = layui.form
+                ,layer = layui.layer
+
+            form.on('submit(submitMerchant)',function (data) {
+                var json=JSON.stringify(data.field);
+                $.ajax({
+                    url:"/merchant/alertMerchantInfo",
+                    type:"post",
+                    data:json,
+                    dataType:"text",
+                    contentType:"application/json",
+                    success:function (result) {
+                        window.alert(result);
+                    },
+                    complete:function(XMLHttpRequest,textStatus){
+                        //请求发送完成
+                    },
+                    error:function(XMLHttpRequest,textStatus){
+                        layer.msg("服务器内部错误");
+                        //请求发送失败
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

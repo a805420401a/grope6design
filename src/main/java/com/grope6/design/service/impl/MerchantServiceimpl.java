@@ -21,7 +21,7 @@ public class MerchantServiceimpl implements MerchantService {
 
     @Override
     public int updateMerchant(Merchant merchant) {
-        return 0;
+        return merchantMapper.updateMerchant(merchant);
     }
 
     @Override

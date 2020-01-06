@@ -313,4 +313,42 @@ public class MerchantIndexContruller {
 
         return "success";
     }
+
+    @RequestMapping("/merchant/merchant_Info")
+    public String merchant_Info(HttpServletRequest request,  Model model){
+
+        String loginName = (String)request.getSession().getAttribute("loginName");
+        Merchant merchant = merchantService.findByUserId(loginName);
+
+        model.addAttribute("id",merchant.getMerchantid());
+        model.addAttribute("name",merchant.getName());
+        model.addAttribute("address",merchant.getAddress());
+        model.addAttribute("reputation",merchant.getReputation());
+        model.addAttribute("people",merchant.getLegalperson());
+        model.addAttribute("totalAsset",merchant.getTotalassets());
+
+        return "/merchant/merchant_Info";
+    }
+
+    @RequestMapping(value = "/merchant/alertMerchantInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String alertMerchantInfo(HttpServletRequest request,  @RequestBody JSONObject jsonParam){
+
+        String json = jsonParam.toJSONString();
+
+        String id = JSONObject.parseObject(json).getString("id");
+        String name = JSONObject.parseObject(json).getString("name");
+        String address = JSONObject.parseObject(json).getString("address");
+        double reputation = Double.parseDouble(JSONObject.parseObject(json).getString("reputation"));
+        String people = JSONObject.parseObject(json).getString("people");
+        double totalAsset = Double.parseDouble(JSONObject.parseObject(json).getString("totalAsset"));
+
+        Merchant merchant = new Merchant(id,name,address,reputation,people,totalAsset);
+
+//        System.out.println(id+"\n"+name+"\n"+address+"\n"+reputation+"\n"+people+"\n"+totalAsset);
+
+        merchantService.updateMerchant(merchant);
+
+        return "信息修改成功";
+    }
 }

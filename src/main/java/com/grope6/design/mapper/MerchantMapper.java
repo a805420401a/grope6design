@@ -2,10 +2,7 @@ package com.grope6.design.mapper;
 
 import com.grope6.design.entity.Merchant;
 import com.grope6.design.entity.MerchantExample;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -30,4 +27,9 @@ public interface MerchantMapper {
 
     @Select("select * from merchant where merchantid = #{merchantid}")
     Merchant selectByUserId(String merchantid);
+
+    @Update("update merchant set " +
+            "name = #{name} , address = #{address} , reputation = #{reputation} , legalperson = #{legalperson} , totalassets = #{totalassets} " +
+            "where merchantid = #{merchantid}")
+    int updateMerchant(Merchant merchant);
 }
