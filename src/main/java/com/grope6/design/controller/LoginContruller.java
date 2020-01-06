@@ -104,19 +104,26 @@ public class LoginContruller {
         if(id.equals("0")){
             //用户
 
+            String phone = JSONObject.parseObject(json).getString("phone");
+            String address = JSONObject.parseObject(json).getString("address");
+
             login = new Login(userId,password,2);
             loginService.insertLogin(login);
 
-            Customer customer = new Customer(userId,name,"","");
+            Customer customer = new Customer(userId,name,phone,address);
             customerService.insertCustomer(customer);
 
         }else if(id.equals("1")){
             //商家
 
+            String person = JSONObject.parseObject(json).getString("person");
+            double totalAssets = Double.parseDouble(JSONObject.parseObject(json).getString("totalAssets"));
+            String address = JSONObject.parseObject(json).getString("address");
+
             login = new Login(userId,password,1);
             loginService.insertLogin(login);
 
-            Merchant merchant = new Merchant(userId,name,"",7,"",0);
+            Merchant merchant = new Merchant(userId,name,address,7,person,totalAssets);
             merchantService.insertMerchant(merchant);
 
         }

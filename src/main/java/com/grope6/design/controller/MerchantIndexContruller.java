@@ -2,11 +2,16 @@ package com.grope6.design.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.grope6.design.dto.GoodsDatagrid;
+import com.grope6.design.dto.OrderData;
+import com.grope6.design.dto.TableDatagrid;
+import com.grope6.design.entity.Customer;
 import com.grope6.design.entity.Goods;
 import com.grope6.design.entity.Goodsshow;
+import com.grope6.design.entity.Indentitem;
+import com.grope6.design.service.CustomerService;
 import com.grope6.design.service.GoodsService;
 import com.grope6.design.service.GoodsShowService;
+import com.grope6.design.service.IndentItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
@@ -15,14 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -34,6 +37,12 @@ public class MerchantIndexContruller {
 
     @Autowired
     GoodsShowService goodsShowService;
+
+    @Autowired
+    IndentItemService indentItemService;
+
+    @Autowired
+    CustomerService customerService;
 
     @RequestMapping("/index")
     public String login(HttpServletRequest request){
@@ -55,11 +64,11 @@ public class MerchantIndexContruller {
 
     @RequestMapping(path = "/merchant", method = RequestMethod.GET)
     @ResponseBody
-    public GoodsDatagrid<Goods> goodslist(HttpServletRequest request,
+    public TableDatagrid<Goods> goodslist(HttpServletRequest request,
                                           @RequestParam(value = "page",defaultValue = "1",required = false) int page,
                                           @RequestParam(value = "limit",defaultValue = "10",required = false) int rows
                                           ){
-        GoodsDatagrid<Goods> goodsDatagrid = new GoodsDatagrid<>();
+        TableDatagrid<Goods> tableDatagrid = new TableDatagrid<>();
 
         String merchantid = (String)request.getSession().getAttribute("loginName");
 
@@ -67,12 +76,12 @@ public class MerchantIndexContruller {
 
         List<Goods> list = courseinfos.getList();
 
-        goodsDatagrid.setCode(0);
-        goodsDatagrid.setCount(courseinfos.getTotal());
-        goodsDatagrid.setData(courseinfos.getList());
-        goodsDatagrid.setMsg("发布的所有商品");
+        tableDatagrid.setCode(0);
+        tableDatagrid.setCount(courseinfos.getTotal());
+        tableDatagrid.setData(courseinfos.getList());
+        tableDatagrid.setMsg("发布的所有商品");
 
-        return goodsDatagrid;
+        return tableDatagrid;
     }
 
     @RequestMapping(path = "/merchant", method = RequestMethod.POST)
@@ -103,7 +112,7 @@ public class MerchantIndexContruller {
 
 
     @RequestMapping("/merchant/add_goods")
-    public String AddGoods(){
+    public String addGoods(){
 
         return "merchant/add_goods";
     }
@@ -243,5 +252,59 @@ public class MerchantIndexContruller {
         }
 
         return "数据保存成功";
+    }
+
+    @RequestMapping("/merchant/process_order")
+    public String processOrder(){
+        return "/merchant/process_order";
+    }
+
+    @RequestMapping(path = "/merchant/orderData", method = RequestMethod.GET)
+    @ResponseBody
+    public TableDatagrid<OrderData> orderData(HttpServletRequest request){
+        TableDatagrid<OrderData> tableDatagrid = new TableDatagrid<>();
+
+        List<OrderData> orderDataList = new ArrayList<>();
+
+        List<Indentitem> indentitemList = indentItemService.findByMerchantId((String)request.getSession().getAttribute("loginName"));
+
+        for(Indentitem i : indentitemList){
+            Customer customer = customerService.findByUserId(i.getBuyerid());
+            Goods goods = goodsService.findByGoodsId(i.getGoodsid());
+            OrderData orderData = new OrderData(
+                    i.getIndentitemid(),
+                    customer.getName(),
+                    customer.getPhone(),
+                    customer.getAddress(),
+                    i.getGoodsid(),
+                    goods.getName(),
+                    i.getNumber(),
+                    Double.parseDouble(String.format("%.2f", i.getNumber() * i.getPrice())),
+                    i.getIndentdatetime(),
+                    i.isPaystate()?"已支付":"未支付",
+                    i.isShippingstatus()?"已发货":"未发货");
+            orderDataList.add(orderData);
+        }
+
+        tableDatagrid.setCode(0);
+        tableDatagrid.setCount(orderDataList.size());
+        tableDatagrid.setData(orderDataList);
+        tableDatagrid.setMsg("订单信息");
+
+        return tableDatagrid;
+    }
+
+
+    @RequestMapping("/merchant/confirmDelivery")
+    @ResponseBody
+    public String confirmDelivery(HttpServletRequest request){
+
+        String orderId = request.getParameter("orderId");
+
+//        System.out.println(orderId);
+
+        indentItemService.updateShippingStatusByIndentItemId(orderId);
+
+        return "success";
     }
 }

@@ -14,7 +14,7 @@ public interface IndentItemService {
     //插入
     int insertIndentitem(Indentitem indentitem);
 
-    List<Indentitem>findAllByBuyerId(String buyerId);
+    List<Indentitem> findAllByBuyerId(String buyerId);
 
     int updatePayStateByIndentItemId(String indentItemId);
 
@@ -22,4 +22,7 @@ public interface IndentItemService {
 
     Indentitem findByIndentItemId(String indentItemId);
 
+    List<Indentitem> findByMerchantId (String merchantId);
+
+    int updateShippingStatusByIndentItemId(String indentItemId);
 }

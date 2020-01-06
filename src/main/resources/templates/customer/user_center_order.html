@@ -49,7 +49,7 @@
 		</div>
 		<div class="right_content clearfix">
 			<h3 class="common_title2">全部订单</h3>
-			<table class="layui-hide" id="goodsIndentTable2" lay-filter="goodsIndentTable2" ></table>
+			<table class="layui-hide" id="goodsIndentTable2" lay-filter="goodsIndentTable2" lay-data="{initSort: {field:'goodsDatetime', type:'desc'}}" ></table>
 		</div>
 	</div>
 
@@ -94,11 +94,13 @@
 				,cols: [
 					[
 						{field:'goodspicture', width:110,align: "center", templet: "#imgtmp", title: '商品图片'}
-						,{field:'goodsName', width:110,align: "center", title: '商品名称'}
-						,{field:'goodsPrice', width:110,align: "center", title: '商品价格'}
-						,{field:'goodsNumber', width:110,align: "center", title: '商品数量'}
-						,{field:'goodsTotalPrice', width:110,align: "center", title: '小计'}
-						,{field:'goodsPayState', width:110,align: "center", title: '支付状态'}
+						,{field:'goodsName', width:110,align: "center", title: '名称'}
+						,{field:'goodsPrice', width:80,align: "center", title: '价格'}
+						,{field:'goodsNumber', width:60,align: "center", title: '数量'}
+						,{field:'goodsTotalPrice', width:80,align: "center", title: '小计'}
+						,{field:'goodsDatetime', width:170,sort: true ,align: "center", title: '订单时间'}
+						,{field:'goodsPayState', width:90,align: "center", title: '支付状态'}
+						,{field:'goodsShippingStatus', width:80,align: "center", title: '发货状态'}
 						,{field:'goodsFinishState', width:110,align: "center", title: '收货状态'}
 						,{field:'operate', width:150,align: "center", toolbar: '#barDemo', title: '操作'}
 					]

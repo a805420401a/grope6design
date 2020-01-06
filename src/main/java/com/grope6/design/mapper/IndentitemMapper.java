@@ -15,7 +15,7 @@ public interface IndentitemMapper {
 
     int deleteByPrimaryKey(String indentitemid);
 
-    @Insert("insert into indentitem value (#{indentitemid},#{buyerid},#{goodsid},#{price},#{number},#{indentdatetime},#{paystate},#{finishstate})")
+    @Insert("insert into indentitem value (#{indentitemid},#{buyerid},#{merchantid},#{goodsid},#{price},#{number},#{indentdatetime},#{paystate},#{finishstate},#{shippingstatus})")
     int insert(Indentitem record);
 
     int insertSelective(Indentitem record);
@@ -47,4 +47,12 @@ public interface IndentitemMapper {
 
     @Select("select * from indentitem where indentitemid = #{indentItemId}")
     Indentitem findByIndentItemId(String indentItemId);
+
+    @Select("select * from indentitem where merchantid = #{merchantId}")
+    List<Indentitem> findByMerchantId(String merchantId);
+
+    @Update("update indentitem set " +
+            "shippingstatus = 1 " +
+            "where indentitemid = #{indentItemId}")
+    int updateShippingStatusByIndentItemId(String indentItemId);
 }

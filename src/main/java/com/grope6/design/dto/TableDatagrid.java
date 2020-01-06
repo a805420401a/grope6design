@@ -3,7 +3,7 @@ package com.grope6.design.dto;
 import java.util.List;
 
 //Layui table json的格式
-public class GoodsDatagrid<T> {
+public class TableDatagrid<T> {
     private int code;
     private String msg;
     private long count;

@@ -3,7 +3,7 @@ package com.grope6.design.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.grope6.design.dto.GoodsAndPicture;
 import com.grope6.design.dto.GoodsCartData;
-import com.grope6.design.dto.GoodsDatagrid;
+import com.grope6.design.dto.TableDatagrid;
 import com.grope6.design.dto.GoodsIndentData;
 import com.grope6.design.entity.Cartitem;
 import com.grope6.design.entity.Goods;
@@ -113,11 +113,11 @@ public class CustomerIndexContruller {
 
     @RequestMapping("/customer/showGoodsCart")
     @ResponseBody
-    public GoodsDatagrid<GoodsCartData> showGoodsCart(HttpServletRequest request){
+    public TableDatagrid<GoodsCartData> showGoodsCart(HttpServletRequest request){
 //        ModelAndView mv = new ModelAndView("customer/cart");
         HttpSession session = request.getSession();
         String buyerid = (String) session.getAttribute("loginName");
-        GoodsDatagrid<GoodsCartData> goodsDatagrid = new GoodsDatagrid<>();
+        TableDatagrid<GoodsCartData> tableDatagrid = new TableDatagrid<>();
 
         List<GoodsCartData> goodsCartDataList = new ArrayList<>();
         List<Cartitem> cartitemList = cartItemService.findAllByUserId(buyerid);
@@ -138,12 +138,12 @@ public class CustomerIndexContruller {
 //            System.out.println(goodsCartData.toString());
         }
 
-        goodsDatagrid.setData(goodsCartDataList);
-        goodsDatagrid.setCount(goodsCartDataList.size());
-        goodsDatagrid.setCode(0);
-        goodsDatagrid.setMsg("购物车数据");
+        tableDatagrid.setData(goodsCartDataList);
+        tableDatagrid.setCount(goodsCartDataList.size());
+        tableDatagrid.setCode(0);
+        tableDatagrid.setMsg("购物车数据");
 
-        return goodsDatagrid;
+        return tableDatagrid;
     }
 
     @RequestMapping("/customer/delGoodsCartItem")
@@ -214,9 +214,9 @@ public class CustomerIndexContruller {
 
     @RequestMapping("/customer/showGoodsIndent")
     @ResponseBody
-    public GoodsDatagrid<GoodsCartData> showGoodsIndent(HttpServletRequest request){
+    public TableDatagrid<GoodsCartData> showGoodsIndent(HttpServletRequest request){
 
-        GoodsDatagrid<GoodsCartData> goodsDatagrid = new GoodsDatagrid<>();
+        TableDatagrid<GoodsCartData> tableDatagrid = new TableDatagrid<>();
 
         List<GoodsCartData> goodsCartDataList = (List) request.getSession().getAttribute("goodsCartDataList");
 
@@ -225,12 +225,12 @@ public class CustomerIndexContruller {
 //        for(GoodsCartData g : goodsCartDataList){
 //            System.out.println(g.toString());
 //        }
-        goodsDatagrid.setData(goodsCartDataList);
-        goodsDatagrid.setCount(goodsCartDataList.size());
-        goodsDatagrid.setCode(0);
-        goodsDatagrid.setMsg("订单数据");
+        tableDatagrid.setData(goodsCartDataList);
+        tableDatagrid.setCount(goodsCartDataList.size());
+        tableDatagrid.setCode(0);
+        tableDatagrid.setMsg("订单数据");
 
-        return goodsDatagrid;
+        return tableDatagrid;
     }
 
     @RequestMapping("/customer/user_center_order")
@@ -252,12 +252,14 @@ public class CustomerIndexContruller {
 //        System.out.println(timestamp);
 
         for(GoodsCartData g : goodsCartDataList ){
+            Goods goods = goodsService.findByGoodsId(g.getGoodsid());
             Indentitem indentitem = new Indentitem( g.getGoodsid()+timestamp,
                                                     (String)session.getAttribute("loginName"),
+                                                    goods.getMerchantid(),
                                                     g.getGoodsid(),
                                                     g.getGoodsPrice(),
                                                     g.getGoodsNumber(),
-                                                    stringDate,false,false
+                                                    stringDate,false,false,false
                                                     );
             indentItemService.insertIndentitem(indentitem);
         }
@@ -267,9 +269,9 @@ public class CustomerIndexContruller {
 
     @RequestMapping("/customer/showGoodsIndent2")
     @ResponseBody
-    public GoodsDatagrid<GoodsIndentData> showGoodsIndent2(HttpServletRequest request){
+    public TableDatagrid<GoodsIndentData> showGoodsIndent2(HttpServletRequest request){
 
-        GoodsDatagrid<GoodsIndentData> goodsIndentDataGoodsDatagrid = new GoodsDatagrid<>();
+        TableDatagrid<GoodsIndentData> goodsIndentDataTableDatagrid = new TableDatagrid<>();
 
         List<GoodsIndentData> goodsIndentDataList = new ArrayList<>();
 
@@ -287,15 +289,16 @@ public class CustomerIndexContruller {
                     i.getPrice()*i.getNumber(),
                     i.getIndentdatetime(),
                     i.isPaystate()?"已支付":"未支付",
-                    i.isFinishstate()?"已确认收货":"未确认收货");
+                    i.isFinishstate()?"已确认收货":"未确认收货",
+                    i.isShippingstatus()?"已发货":"未发货");
             goodsIndentDataList.add(goodsIndentData);
         }
-        goodsIndentDataGoodsDatagrid.setData(goodsIndentDataList);
-        goodsIndentDataGoodsDatagrid.setCount(goodsIndentDataList.size());
-        goodsIndentDataGoodsDatagrid.setCode(0);
-        goodsIndentDataGoodsDatagrid.setMsg("已下订单数据");
+        goodsIndentDataTableDatagrid.setData(goodsIndentDataList);
+        goodsIndentDataTableDatagrid.setCount(goodsIndentDataList.size());
+        goodsIndentDataTableDatagrid.setCode(0);
+        goodsIndentDataTableDatagrid.setMsg("已下订单数据");
 
-        return goodsIndentDataGoodsDatagrid;
+        return goodsIndentDataTableDatagrid;
     }
 
     @RequestMapping("/customer/payAndNotarize")
@@ -304,8 +307,6 @@ public class CustomerIndexContruller {
 
         String data = (String)request.getParameter("sign");
         String goodsindentitemid = (String)request.getParameter("goodsindentitemid");
-
-        System.out.println(goodsindentitemid+"   "+data);
 
         if(data.equals("1")){
             //支付

@@ -1,11 +1,12 @@
 package com.grope6.design.entity;
 
-import java.util.Date;
-
 public class Indentitem {
+
     private String indentitemid;
 
     private String buyerid;
+
+    private String merchantid;
 
     private String goodsid;
 
@@ -19,15 +20,19 @@ public class Indentitem {
 
     private boolean finishstate;
 
-    public Indentitem(String indentitemid, String buyerid, String goodsid, double price, Integer number, String indentdatetime, boolean paystate, boolean finishstate) {
+    private boolean shippingstatus;
+
+    public Indentitem(String indentitemid, String buyerid, String merchantid, String goodsid, double price, Integer number, String indentdatetime, boolean paystate, boolean finishstate, boolean shippingstatus) {
         this.indentitemid = indentitemid;
         this.buyerid = buyerid;
+        this.merchantid = merchantid;
         this.goodsid = goodsid;
         this.price = price;
         this.number = number;
         this.indentdatetime = indentdatetime;
         this.paystate = paystate;
         this.finishstate = finishstate;
+        this.shippingstatus = shippingstatus;
     }
 
     public Indentitem() {
@@ -47,6 +52,14 @@ public class Indentitem {
 
     public void setBuyerid(String buyerid) {
         this.buyerid = buyerid;
+    }
+
+    public String getMerchantid() {
+        return merchantid;
+    }
+
+    public void setMerchantid(String merchantid) {
+        this.merchantid = merchantid;
     }
 
     public String getGoodsid() {
@@ -95,5 +108,13 @@ public class Indentitem {
 
     public void setFinishstate(boolean finishstate) {
         this.finishstate = finishstate;
+    }
+
+    public boolean isShippingstatus() {
+        return shippingstatus;
+    }
+
+    public void setShippingstatus(boolean shippingstatus) {
+        this.shippingstatus = shippingstatus;
     }
 }

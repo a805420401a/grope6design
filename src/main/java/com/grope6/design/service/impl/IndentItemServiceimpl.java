@@ -49,4 +49,14 @@ public class IndentItemServiceimpl implements IndentItemService {
     public Indentitem findByIndentItemId(String indentItemId) {
         return indentitemMapper.findByIndentItemId(indentItemId);
     }
+
+    @Override
+    public List<Indentitem> findByMerchantId(String merchantId) {
+        return indentitemMapper.findByMerchantId(merchantId);
+    }
+
+    @Override
+    public int updateShippingStatusByIndentItemId(String indentItemId) {
+        return indentitemMapper.updateShippingStatusByIndentItemId(indentItemId);
+    }
 }
