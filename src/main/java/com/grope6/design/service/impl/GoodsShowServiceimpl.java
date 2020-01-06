@@ -32,7 +32,7 @@ public class GoodsShowServiceimpl implements GoodsShowService {
 
     @Override
     public Goodsshow findByGoodsid(String goodsid) {
-        return null;
+        return goodsshowMapper.findByGoodsid(goodsid);
     }
 
     @Override

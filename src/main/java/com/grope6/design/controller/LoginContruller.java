@@ -29,8 +29,12 @@ public class LoginContruller {
     private MerchantService merchantService;
 
     @RequestMapping("/login")
-    public String login(){
+    public String login(HttpServletRequest request){
 
+        String loginName = (String) request.getSession().getAttribute("loginName");
+        if(loginName != null){
+            request.getSession().removeAttribute("loginName");
+        }
         return "login";
     }
 

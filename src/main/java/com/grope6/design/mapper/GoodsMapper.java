@@ -1,7 +1,6 @@
 package com.grope6.design.mapper;
 
 import com.grope6.design.dto.GoodsAndPicture;
-import com.grope6.design.dto.GoodsQryItem;
 import com.grope6.design.entity.Goods;
 import com.grope6.design.entity.GoodsExample;
 import org.apache.ibatis.annotations.*;

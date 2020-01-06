@@ -8,38 +8,36 @@
 
 </head>
 <body>
+	<input type="hidden" id="goodsid" th:value="${goods.goodsid}" />
 	<div class="header_con">
 		<div class="header">
 			<div class="welcome fl">欢迎来到医疗设备!</div>
 			<div class="fr">
-				<div class="login_info fl">
-					欢迎您：<em>张 山</em>
-				</div>
 				<div class="login_btn fl">
-					<a href="login.html">登录</a>
+					<a href="user_center_info.html">姓名</a>
 					<span>|</span>
-					<a href="register.html">注册</a>
 				</div>
 				<div class="user_link fl">
-					<span>|</span>
-					<a href="user_center_info.html">用户中心</a>
-					<span>|</span>
 					<a href="cart.html">我的购物车</a>
 					<span>|</span>
 					<a href="user_center_order.html">我的订单</a>
+					<span>|</span>
+				</div>
+				<div class="login_btn fl">
+					<a href="/login">退出登录</a>
 				</div>
 			</div>
 		</div>		
 	</div>
 
 	<div class="search_bar clearfix">
-		<a href="index.html" class="logo fl"><img src="customer/images/logo/logo.png"></a>
+		<a href="index.html" class="logo fl"><img src="/customer/images/logo/logo.png"></a>
 		<div class="search_con fl">
 			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
 			<input type="button" class="input_btn fr" name="" value="搜索">
 		</div>
 		<div class="guest_cart fr">
-			<a href="cart.html" class="cart_name fl">我的购物车</a>
+			<a href="/customer/goodsCart" class="cart_name fl">我的购物车</a>
 			<div class="goods_count fl" id="show_count">1</div>
 		</div>
 	</div>
@@ -77,23 +75,29 @@
 
 		<div class="goods_detail_list fr">
 			<h3 th:text="${goods.name}">床头柜</h3>
-			<p th:text="${goods.description}">床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，</p>
+			<p th:text="${goods.description}"></p>
 			<div class="prize_bar">
-				<span class="show_pirze">¥<em th:text="${goods.price}">500.00</em></span>
+				<span class="show_pirze">¥<em id="price" th:text="${goods.price}">500.00</em></span>
 				<span class="show_unit">单  位：个</span>
+			</div>
+
+			<div class="goods_num clearfix">
+				<div class="num_name fl">折 扣：</div>
+				<div class="num_name fl" id="discount" th:text="${goods.discount}"></div>
+				<div class="num_name fl">折</div>
 			</div>
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
 				<div class="num_add fl">
-					<input type="text" class="num_show fl" value="1">
-					<a href="javascript:;" class="add fr">+</a>
-					<a href="javascript:;" class="minus fr">-</a>	
-				</div> 
+					<input type="text" class="num_show fl" id="goodsNum" value="1">
+					<a href="javascript:;" class="add fr" id="addGoods">+</a>
+					<a href="javascript:;" class="minus fr" id="subGoods">-</a>
+				</div>
 			</div>
-			<div class="total">总价：<em id="totalPrice">500元</em></div>
+			<div class="total">总价：<em id="totalPrice" th:text="${goods.price}">500元</em></div>
 			<div class="operate_btn">
-				<a href="javascript:;" class="buy_btn">立即购买</a>
-				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
+				<a href="javascript:;" class="buy_btn" id="immediateBuy">立即购买</a>
+				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>
 			</div>
 		</div>
 	</div>
@@ -104,14 +108,12 @@
 				<li class="active">商品介绍</li>
 				<li>评论</li>
 			</ul>
-
 			<div class="tab_content">
 				<dl>
 					<dt>商品详情：</dt>
-					<dd>床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜，床头柜</dd>
+					<dd th:text="${goods.description}"></dd>
 				</dl>
 			</div>
-
 		</div>
 	</div>
 
@@ -130,26 +132,53 @@
 	</div>
 	<div class="add_jump"></div>
 
-	<script type="text/javascript" th:src="@{customer/js/jquery-1.12.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{/customer/js/jquery-1.12.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{/customer/js/jquery-ui.min.js}"></script>
 	<script type="text/javascript">
-		var $add_x = $('#add_cart').offset().top;
-		var $add_y = $('#add_cart').offset().left;
 
-		var $to_x = $('#show_count').offset().top;
-		var $to_y = $('#show_count').offset().left;
-
-		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
-		$('#add_cart').click(function(){
-			$(".add_jump").stop().animate({
-				'left': $to_y+7,
-				'top': $to_x+7},
-				"fast", function() {
-					$(".add_jump").fadeOut('fast',function(){
-						$('#show_count').html(2);
-					});
-
+		$(document).ready(function(){
+			var number = $("#goodsNum").val();
+			var price  = $("#price").text();
+			var discount = (parseFloat($("#discount").text()) * 0.1);
+			var totalPrice = (price * number * discount).toFixed(2);
+			$("#totalPrice").text(totalPrice);
+			$("#addGoods").click(function () {
+				number ++;
+				$("#goodsNum").val(number);
+				totalPrice = (price * number * discount).toFixed(2);
+				$("#totalPrice").text(totalPrice);
 			});
-		})
+			$("#subGoods").click(function () {
+				if(number > 1){
+					number --;
+					$("#goodsNum").val(number);
+				}
+				totalPrice = (price * number * discount).toFixed(2);
+				$("#totalPrice").text(totalPrice);
+			});
+			$("#goodsNum").change(function() { //自主修改数量
+				number = $("#goodsNum").val();
+				totalPrice = (price * number * discount).toFixed(2);
+				$("#totalPrice").text(totalPrice);
+			});
+
+			$("#add_cart").click(function(){
+				$.post("/customer/addGoodsCartItem",
+				{
+					goodsid:$("#goodsid").val(),
+					number:number,
+					totalPrice:totalPrice
+				},
+				function(data,status){
+					if(status == "success"){
+						alert(data);
+					}else{
+						alert("添加失败");
+					}
+				});
+			});
+		});
+
 	</script>
 	
 </body>

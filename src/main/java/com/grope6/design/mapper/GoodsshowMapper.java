@@ -33,4 +33,7 @@ public interface GoodsshowMapper {
 
     @Select("select * from Goodsshow")
     List<Goodsshow> findAll();
+
+    @Select("select * from Goodsshow where goodsid = #{goodsid}")
+    Goodsshow findByGoodsid(String goodsid);
 }

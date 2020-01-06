@@ -2,7 +2,6 @@ package com.grope6.design.service;
 
 import com.github.pagehelper.PageInfo;
 import com.grope6.design.dto.GoodsAndPicture;
-import com.grope6.design.dto.GoodsQryItem;
 import com.grope6.design.entity.Goods;
 
 import java.util.List;
