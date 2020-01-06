@@ -1,6 +1,7 @@
 package com.grope6.design.dto;
 
 public class GoodsCartData {
+    private String goodsid;
     private String goodsCartItemId;
     private String goodspicture;
     private String goodsName;
@@ -9,7 +10,8 @@ public class GoodsCartData {
     private int goodsNumber;
     private double goodsTotalPrice;
 
-    public GoodsCartData(String goodsCartItemId, String goodspicture, String goodsName, double goodsPrice, double goodsDiscount, int goodsNumber, double goodsTotalPrice) {
+    public GoodsCartData(String goodsid, String goodsCartItemId, String goodspicture, String goodsName, double goodsPrice, double goodsDiscount, int goodsNumber, double goodsTotalPrice) {
+        this.goodsid = goodsid;
         this.goodsCartItemId = goodsCartItemId;
         this.goodspicture = goodspicture;
         this.goodsName = goodsName;
@@ -20,6 +22,14 @@ public class GoodsCartData {
     }
 
     public GoodsCartData() {
+    }
+
+    public String getGoodsid() {
+        return goodsid;
+    }
+
+    public void setGoodsid(String goodsid) {
+        this.goodsid = goodsid;
     }
 
     public String getGoodsCartItemId() {

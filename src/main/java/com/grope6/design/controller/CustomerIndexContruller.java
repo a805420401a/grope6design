@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.grope6.design.dto.GoodsAndPicture;
 import com.grope6.design.dto.GoodsCartData;
 import com.grope6.design.dto.GoodsDatagrid;
+import com.grope6.design.dto.GoodsIndentData;
 import com.grope6.design.entity.Cartitem;
 import com.grope6.design.entity.Goods;
 import com.grope6.design.entity.Goodsshow;
+import com.grope6.design.entity.Indentitem;
 import com.grope6.design.service.CartItemService;
 import com.grope6.design.service.GoodsService;
 import com.grope6.design.service.GoodsShowService;
+import com.grope6.design.service.IndentItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,6 +38,9 @@ public class CustomerIndexContruller {
 
     @Autowired
     CartItemService cartItemService;
+
+    @Autowired
+    IndentItemService indentItemService;
 
     @RequestMapping("/customer/index")
     public String index(HttpServletRequest request){
@@ -117,7 +125,8 @@ public class CustomerIndexContruller {
         for(Cartitem i : cartitemList){
             Goods goods = goodsService.findByGoodsId(i.getGoodsid());  //获取商品信息
             Goodsshow goodsshow = goodsShowService.findByGoodsid(i.getGoodsid()); //获取商品图片
-            GoodsCartData goodsCartData = new GoodsCartData(i.getCartitemid(),
+            GoodsCartData goodsCartData = new GoodsCartData(goods.getGoodsid(),
+                                                            i.getCartitemid(),
                                                             goodsshow.getPicturepath(), //录入商品信息
                                                             goods.getName(),
                                                             goods.getPrice(),
@@ -168,6 +177,7 @@ public class CustomerIndexContruller {
         //解析json串
         for(String s : json){
             GoodsCartData goodsCartData = new GoodsCartData();
+            goodsCartData.setGoodsid(JSONObject.parseObject(s).getString("goodsid"));
             goodsCartData.setGoodsCartItemId(JSONObject.parseObject(s).getString("goodsCartItemId"));
             goodsCartData.setGoodspicture(JSONObject.parseObject(s).getString("goodspicture"));
             goodsCartData.setGoodsName(JSONObject.parseObject(s).getString("goodsName"));
@@ -195,6 +205,8 @@ public class CustomerIndexContruller {
             totalPrice += g.getGoodsTotalPrice();
         }
 
+        totalPrice = Double.parseDouble(String.format("%.2f", totalPrice));
+
         model.addAttribute("totalPrice",totalPrice);
 
         return "customer/place_order";
@@ -216,8 +228,99 @@ public class CustomerIndexContruller {
         goodsDatagrid.setData(goodsCartDataList);
         goodsDatagrid.setCount(goodsCartDataList.size());
         goodsDatagrid.setCode(0);
-        goodsDatagrid.setMsg("购物车数据");
+        goodsDatagrid.setMsg("订单数据");
 
         return goodsDatagrid;
+    }
+
+    @RequestMapping("/customer/user_center_order")
+    public String user_center_order(HttpServletRequest request,Model model){
+
+        HttpSession session = request.getSession();
+        //将数据存入数据库中
+        List<GoodsCartData> goodsCartDataList = (List) session.getAttribute("goodsCartDataList");
+
+        if(goodsCartDataList == null){  //不是通过提交订单进入订单界面的
+            return "customer/user_center_order";
+        }
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        String stringDate = formatter.format(date);
+
+        String timestamp = String.valueOf(date.getTime()/1000);
+
+//        System.out.println(timestamp);
+
+        for(GoodsCartData g : goodsCartDataList ){
+            Indentitem indentitem = new Indentitem( g.getGoodsid()+timestamp,
+                                                    (String)session.getAttribute("loginName"),
+                                                    g.getGoodsid(),
+                                                    g.getGoodsPrice(),
+                                                    g.getGoodsNumber(),
+                                                    stringDate,false,false
+                                                    );
+            indentItemService.insertIndentitem(indentitem);
+        }
+        session.removeAttribute("goodsCartDataList");
+        return "customer/user_center_order";
+    }
+
+    @RequestMapping("/customer/showGoodsIndent2")
+    @ResponseBody
+    public GoodsDatagrid<GoodsIndentData> showGoodsIndent2(HttpServletRequest request){
+
+        GoodsDatagrid<GoodsIndentData> goodsIndentDataGoodsDatagrid = new GoodsDatagrid<>();
+
+        List<GoodsIndentData> goodsIndentDataList = new ArrayList<>();
+
+        List<Indentitem> indentitemList = indentItemService.findAllByBuyerId((String)request.getSession().getAttribute("loginName"));
+
+        for(Indentitem i : indentitemList){
+            Goods goods = goodsService.findByGoodsId(i.getGoodsid());
+            Goodsshow goodsshow = goodsShowService.findByGoodsid(i.getGoodsid());
+            GoodsIndentData goodsIndentData = new GoodsIndentData(
+                    i.getIndentitemid(),
+                    goodsshow.getPicturepath(),
+                    goods.getName(),
+                    i.getPrice(),
+                    i.getNumber(),
+                    i.getPrice()*i.getNumber(),
+                    i.getIndentdatetime(),
+                    i.isPaystate()?"已支付":"未支付",
+                    i.isFinishstate()?"已确认收货":"未确认收货");
+            goodsIndentDataList.add(goodsIndentData);
+        }
+        goodsIndentDataGoodsDatagrid.setData(goodsIndentDataList);
+        goodsIndentDataGoodsDatagrid.setCount(goodsIndentDataList.size());
+        goodsIndentDataGoodsDatagrid.setCode(0);
+        goodsIndentDataGoodsDatagrid.setMsg("已下订单数据");
+
+        return goodsIndentDataGoodsDatagrid;
+    }
+
+    @RequestMapping("/customer/payAndNotarize")
+    @ResponseBody
+    public String payAndNotarize(HttpServletRequest request){
+
+        String data = (String)request.getParameter("sign");
+        String goodsindentitemid = (String)request.getParameter("goodsindentitemid");
+
+        System.out.println(goodsindentitemid+"   "+data);
+
+        if(data.equals("1")){
+            //支付
+            indentItemService.updatePayStateByIndentItemId(goodsindentitemid);
+            return "支付成功";
+        }else if(data.equals("2")){
+            //确认收货
+            Indentitem indentitem = indentItemService.findByIndentItemId(goodsindentitemid);
+            if(!indentitem.isPaystate()){
+                return "确认收货失败，请先支付";
+            }
+            indentItemService.updateFinishStateByIndentItemId(goodsindentitemid);
+            return "确认收货成功";
+        }
+
+        return"操作有误";
     }
 }

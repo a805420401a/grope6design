@@ -5,15 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
+
 @SpringBootTest
 class Grope6DesignApplicationTests {
 
-    @Autowired
-    private Login login;
-
     @Test
     void contextLoads() {
-        System.out.println(login.getUserid()+login.getUserpassword());
     }
-
 }

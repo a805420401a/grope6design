@@ -74,13 +74,12 @@
 	<div class="common_list_con clearfix">
 		<div class="settle_con">
 			<div class="total_goods_count">共<em th:text="${number}"></em>件商品，总金额<b th:text="${totalPrice} + '元'"></b></div>
-			<div class="transit">运费：<b>10元</b></div>
 			<div class="total_pay">实付款：<b th:text="${totalPrice} + '元'"></b></div>
 		</div>
 	</div>
 
 	<div class="order_submit clearfix">
-		<a href="javascript:;" id="order_btn">提交订单</a>
+		<a href="/customer/user_center_order" id="order_btn">提交订单</a>
 	</div>
 
 	<div class="footer">
@@ -108,13 +107,6 @@
 	<script type="text/html" id="imgtmp">
 		<img src="{{d.goodspicture}}" style="width: 200px ; height: 200px" />
 	</script>
-	<!--	<script type="text/html" id="add_sub_num">-->
-	<!--		<div class="num_add">-->
-	<!--			<a href="javascript:;" class="add fl">+</a>-->
-	<!--			<input type="text" class="num_show fl" value="1">-->
-	<!--			<a href="javascript:;" class="minus fl">-</a>-->
-	<!--		</div>-->
-	<!--	</script>-->
 	<style type="text/css">
 		.layui-table-cell{
 			height:100px;

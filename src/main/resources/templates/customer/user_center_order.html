@@ -1,38 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>医疗设备-用户中心</title>
-	<link rel="stylesheet" type="text/css" href="css/reset.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" media="all" th:href="@{/plugins/layui/css/layui.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/customer/css/reset.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/customer/css/main.css}">
 </head>
 <body>
 	<div class="header_con">
 		<div class="header">
 			<div class="welcome fl">欢迎来到医疗设备!</div>
 			<div class="fr">
-				<div class="login_info fl">
-					欢迎您：<em>张 山</em>
-				</div>
 				<div class="login_btn fl">
-					<a href="login.html">登录</a>
+					<a href="user_center_info.html">姓名</a>
 					<span>|</span>
-					<a href="register.html">注册</a>
 				</div>
 				<div class="user_link fl">
-					<span>|</span>
-					<a href="user_center_info.html">用户中心</a>
-					<span>|</span>
 					<a href="cart.html">我的购物车</a>
 					<span>|</span>
 					<a href="user_center_order.html">我的订单</a>
+					<span>|</span>
+				</div>
+				<div class="login_btn fl">
+					<a href="/login">退出登录</a>
 				</div>
 			</div>
 		</div>		
 	</div>
 
 	<div class="search_bar clearfix">
-		<a href="index.html" class="logo fl"><img src="images/logo/logo.png"></a>
+		<a href="index.html" class="logo fl"><img src="/customer/images/logo/logo.png"></a>
 		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
 		<div class="search_con fr">
 			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
@@ -50,79 +48,10 @@
 			</ul>
 		</div>
 		<div class="right_content clearfix">
-				<h3 class="common_title2">全部订单</h3>
-				<ul class="order_list_th w978 clearfix">
-					<li class="col01">2016-8-21 17:36:24</li>
-					<li class="col02">订单号：56872934</li>
-					<li class="col02 stress">未支付</li>		
-				</ul>
-
-				<table class="order_list_table w980">
-					<tbody>
-						<tr>
-							<td width="55%">
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="images/wardnursing/goods001.jpg"></li>
-									<li class="col02">床头柜<em>500.00/个</em></li>
-									<li class="col03">1</li>
-									<li class="col04">500.00元</li>
-								</ul>
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="images/wardnursing/goods002.jpg"></li>
-									<li class="col02">病床<em>500.00元/个</em></li>
-									<li class="col03">1</li>
-									<li class="col04">500.00元</li>
-								</ul>
-							</td>
-							<td width="15%">1000.60元</td>
-							<td width="15%">待付款</td>
-							<td width="15%"><a href="#" class="oper_btn">去付款</a></td>
-						</tr>
-					</tbody>
-				</table>
-				
-				<ul class="order_list_th w978 clearfix">
-					<li class="col01">2016-8-21 17:36:24</li>
-					<li class="col02">订单号：56872934</li>
-					<li class="col02 stress">已支付</li>			
-				</ul>
-				<table class="order_list_table w980">
-					<tbody>
-						<tr>
-							<td width="55%">
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="images/wardnursing/goods001.jpg"></li>
-									<li class="col02">床头柜<em>500.00元/个</em></li>
-									<li class="col03">1</li>
-									<li class="col04">500.00元</li>
-								</ul>
-								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="images/wardnursing/goods002.jpg"></li>
-									<li class="col02">病床<em>500.00元/个</em></li>
-									<li class="col03">1</li>
-									<li class="col04">500.00元</li>
-								</ul>
-							</td>
-							<td width="15%">1000.00元</td>
-							<td width="15%">已付款</td>
-							<td width="15%"><a href="#" class="oper_btn">查看物流</a></td>
-						</tr>
-					</tbody>
-				</table>
-
-				<div class="pagenation">
-					<a href="#"><上一页</a>
-					<a href="#" class="active">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a href="#">下一页></a>
-				</div>
+			<h3 class="common_title2">全部订单</h3>
+			<table class="layui-hide" id="goodsIndentTable2" lay-filter="goodsIndentTable2" ></table>
 		</div>
 	</div>
-
-
 
 	<div class="footer">
 		<div class="foot_link">
@@ -137,6 +66,95 @@
 		<p>CopyRight © 2016 徐州工程学院 All Rights Reserved</p>
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
+
+	<script th:src="@{/plugins/layui/layui.js}"></script>
+	<script type="text/html" id="imgtmp">
+		<img src="{{d.goodspicture}}" style="width: 200px ; height: 200px" />
+	</script>
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-xs layui-btn-xs" lay-event="pay">支付</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="notarize">确认收货</a>
+	</script>
+	<style type="text/css">
+		.layui-table-cell{
+			height:100px;
+			line-height: 100px;
+		}
+
+	</style>
+	<script>
+		layui.use(['layer','table'], function() {
+			var table = layui.table,
+					$ = layui.jquery;
+			table.render({
+				elem: '#goodsIndentTable2'
+				,url:'[[@{/customer/showGoodsIndent2}]]'
+				,height: 500
+				,method:"GET"
+				,cols: [
+					[
+						{field:'goodspicture', width:110,align: "center", templet: "#imgtmp", title: '商品图片'}
+						,{field:'goodsName', width:110,align: "center", title: '商品名称'}
+						,{field:'goodsPrice', width:110,align: "center", title: '商品价格'}
+						,{field:'goodsNumber', width:110,align: "center", title: '商品数量'}
+						,{field:'goodsTotalPrice', width:110,align: "center", title: '小计'}
+						,{field:'goodsPayState', width:110,align: "center", title: '支付状态'}
+						,{field:'goodsFinishState', width:110,align: "center", title: '收货状态'}
+						,{field:'operate', width:150,align: "center", toolbar: '#barDemo', title: '操作'}
+					]
+				]
+			});
+			var $ = layui.$, active = {
+				reload: function(){
+					//执行重载
+					table.reload('goodsIndentTable2', {
+						page: {
+							curr: 1 //重新从第 1 页开始
+						}
+					});
+				}
+			};
+
+			table.on('tool(goodsIndentTable2)', function(obj){
+
+				var data = obj.data;
+
+				console.log(data);
+
+				if(obj.event === 'pay') {
+					layer.confirm('确认支付？', function (index) {
+						layer.close(index);
+						$.post("/customer/payAndNotarize",
+								{
+									sign : '1',
+									goodsindentitemid:data.goodsindentitemid
+								},
+								function (data,status) {
+									if(status == "success"){
+										// alert(data);
+										window.location.reload();
+									}
+								});
+					});
+				}else if(obj.event === 'notarize'){
+					layer.confirm('确认收货？', function (index) {
+						layer.close(index);
+						$.post("/customer/payAndNotarize",
+								{
+									sign : '2',
+									goodsindentitemid:data.goodsindentitemid
+								},
+								function (data,status) {
+									if(status == "success"){
+										// alert(data);
+										window.location.reload();
+									}
+								});
+					});
+				}
+			});
+		});
+	</script>
 	
 </body>
 </html>
